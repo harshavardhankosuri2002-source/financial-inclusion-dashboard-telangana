@@ -39,9 +39,10 @@ import numpy as np
 # CONSTANTS & CONFIGURATION
 # ═════════════════════════════════════════════════════════════════════
 
+_BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 EXCEL_FILE = (
     "Group_10_Financial_Inclusion_MSME_Credit_Access_final.xlsx"
-    if os.path.exists("Group_10_Financial_Inclusion_MSME_Credit_Access_final.xlsx")
+    if os.path.exists(os.path.join(_BASE_DIR, "Group_10_Financial_Inclusion_MSME_Credit_Access_final.xlsx"))
     else "Group_10_Financial_Inclusion_MSME_Credit_Access_PRO.xlsx"
 )
 
@@ -1771,6 +1772,7 @@ dash_app = dash.Dash(
     suppress_callback_exceptions=True,
     title="Financial Inclusion & MSME Credit Access — Telangana",
     meta_tags=[{"name": "viewport", "content": "width=device-width, initial-scale=1"}],
+    assets_folder=os.path.join(_BASE_DIR, "assets"),
 )
 
 # Vercel expects a Flask instance named `app`

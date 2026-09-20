@@ -1,4 +1,12 @@
 {
+  "buildCommand": null,
+  "outputDirectory": null,
+  "functions": {
+    "api/index.py": {
+      "maxDuration": 60,
+      "includeFiles": "{app.py,assets/**,*.xlsx,*.csv}"
+    }
+  },
   "rewrites": [
     {
       "source": "/(.*)",
