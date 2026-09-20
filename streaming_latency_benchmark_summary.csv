@@ -1,0 +1,4 @@
+stream_mode,polling_interval_ms,number_of_observations,mean_processing_latency_ms,min_processing_latency_ms,max_processing_latency_ms,std_processing_latency_ms,mean_client_visible_latency_ms,min_client_visible_latency_ms,max_client_visible_latency_ms,std_client_visible_latency_ms,p95_client_visible_latency_ms
+Normal,1500,10,0.05,0.01,0.12,0.04,7.5,2.55,13.15,3.76,12.77
+Slow,3000,10,0.04,0.01,0.09,0.02,7.87,4.83,14.38,3.16,13.27
+Fast,750,10,0.07,0.03,0.23,0.06,9.32,5.33,12.66,2.2,12.09

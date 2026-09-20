@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.git
+.github
+venv/
+env/
+.env
+chrome_temp/

@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: telangana-financial-inclusion
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:server --workers 2 --timeout 120
+    plan: free
