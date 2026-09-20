@@ -1,6 +1,5 @@
 {
-  "buildCommand": null,
-  "outputDirectory": null,
+  "buildCommand": "",
   "functions": {
     "api/index.py": {
       "maxDuration": 60,
