@@ -1777,6 +1777,40 @@ dash_app = dash.Dash(
 
 # Vercel expects a Flask instance named `app`
 server = dash_app.server
+
+import urllib.parse
+
+class VercelPathFixMiddleware:
+    """
+    Vercel Serverless Function WSGI middleware.
+    Restores the real client request path from __dash_path or Vercel routing headers.
+    """
+    def __init__(self, wsgi_app):
+        self.wsgi_app = wsgi_app
+
+    def __call__(self, environ, start_response):
+        qs = environ.get("QUERY_STRING", "")
+        if "__dash_path=" in qs:
+            params = urllib.parse.parse_qs(qs)
+            if "__dash_path" in params:
+                real_path = params["__dash_path"][0]
+                if not real_path.startswith("/"):
+                    real_path = "/" + real_path
+                environ["PATH_INFO"] = real_path
+                del params["__dash_path"]
+                environ["QUERY_STRING"] = urllib.parse.urlencode(params, doseq=True)
+        elif "api/index.py" in environ.get("PATH_INFO", "") or "app.py" in environ.get("PATH_INFO", ""):
+            matched = environ.get("HTTP_X_MATCHED_PATH") or environ.get("REQUEST_URI", "")
+            if matched and not ("index.py" in matched or "app.py" in matched):
+                environ["PATH_INFO"] = matched.split("?")[0]
+            else:
+                raw = environ.get("PATH_INFO", "")
+                raw = raw.replace("/api/index.py", "").replace("/app.py", "") or "/"
+                environ["PATH_INFO"] = raw
+
+        return self.wsgi_app(environ, start_response)
+
+server.wsgi_app = VercelPathFixMiddleware(server.wsgi_app)
 app = server  # Official Flask WSGI instance for Vercel
 handler = server  # WSGI alias
 application = server  # WSGI alias
